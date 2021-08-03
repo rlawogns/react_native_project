@@ -1,4 +1,3 @@
 # react_native_project
  
-start 
-npm run android
+start :  npm run android
