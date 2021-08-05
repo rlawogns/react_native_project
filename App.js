@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React,{Component} from 'react';
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -14,6 +14,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Image,
   useColorScheme,
   View,
 } from 'react-native';
@@ -51,7 +52,22 @@ const Section = ({children, title}): Node => {
     </View>
   );
 };
-
+class Time extends Component{       //컴포넌트
+    render () {
+        let img='';
+        if (this.props.type ==='one'){
+            img = require('./assets/time.jpg');
+        }
+        else if (this.props.type ==='two'){
+            img=require('./assets/고양.jpg');
+        }
+        return (
+            <View>
+                <Image source = {img} style={{width : 200, height : 200}}/>
+            </View>
+        )
+    }
+}
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -60,37 +76,20 @@ const App: () => Node = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View style={styles.container}>
+        <Text>Hello world </Text>
+        <Time type = 'one'> </Time>
+        <Time type = 'two' />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent:'center',    //세로
+    alignItems:'center'     //가로
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
