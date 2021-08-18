@@ -17,6 +17,7 @@ import {
   Image,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import {
@@ -43,15 +44,39 @@ class Time extends Component{       //컴포넌트
         )
     }
 }
-const App = () => {
-  return (
-    <View style={styles.container}>
-        <Text>Hello world </Text>
-        <Time type = 'one'> </Time>
-        <Time type = 'two' />
+class App extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            address : '안산'
+        }
+    }
 
-    </View>
-  );
+    writeAddress = () => {
+        this.setState({
+            address : '경기도 안산'
+        },function(){
+        alert('변경');
+        })
+    }
+    writeReset = () => {
+            this.setState({
+                address : '안산'
+            })
+        }
+
+    render(){                           //component쓰면 render안에 return이 와야한다?
+        return (
+            <View style={styles.container}>
+                <Text>Hello world </Text>
+                <Time type = 'one'> </Time>
+                <Time type = 'two' />
+                <Text> {this.state.address}</Text>
+                <Button title={'나의 주소출력'} onPress={this.writeAddress}/>
+                <Button title={'주소리셋'} onPress={this.writeReset}/>
+            </View>
+          );
+    }
 };
 
 const styles = StyleSheet.create({
