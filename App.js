@@ -5,9 +5,10 @@
  * @format
  * @flow strict-local
  */
-
+ import 'react-native-gesture-handler';
 import React,{Component} from 'react';
-import type {Node} from 'react';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   SafeAreaView,
   ScrollView,
@@ -20,13 +21,7 @@ import {
   Button,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Stack = createStackNavigator();
 
 class Time extends Component{       //컴포넌트
     render () {
@@ -44,37 +39,79 @@ class Time extends Component{       //컴포넌트
         )
     }
 }
-class App extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            address : '안산'
-        }
-    }
 
-    writeAddress = () => {
-        this.setState({
-            address : '경기도 안산'
-        },function(){
-        alert('변경');
-        })
-    }
-    writeReset = () => {
-            this.setState({
-                address : '안산'
-            })
+function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.sectionTitle}>메인 페이지</Text>
+      <Button
+        title="Profile page"
+        onPress={() =>
+          navigation.navigate('Profile', { name: 'Jane' })
         }
+      />
+    </View>
+  );
+}
+class Profile extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+        address : '안산'
+    }
+  }
+  
+  
+  writeAddress = () => {
+      this.setState({
+          address : '경기도 안산'
+      },function(){
+      alert('변경');
+      })
+  }
+  writeReset = () => {
+          this.setState({
+              address : '안산'
+          })
+      }
+  render(){
+    return (
+      <View style={styles.container}>
+                  <Text>Hello world </Text>
+                  <Time type = 'one'> </Time>
+                  <Time type = 'two' />
+                  <Text> {this.state.address}</Text>
+                  <Button title={'나의 주소출력'} onPress={this.writeAddress}/>
+                  <Button title={'주소리셋'} onPress={this.writeReset}/>
+                  
+              </View>
+    );
+  }
+}
+class App extends Component{
+    
 
     render(){                           //component쓰면 render안에 return이 와야한다?
         return (
-            <View style={styles.container}>
+            /*<View style={styles.container}>
                 <Text>Hello world </Text>
                 <Time type = 'one'> </Time>
                 <Time type = 'two' />
                 <Text> {this.state.address}</Text>
                 <Button title={'나의 주소출력'} onPress={this.writeAddress}/>
                 <Button title={'주소리셋'} onPress={this.writeReset}/>
-            </View>
+            </View>*/
+            <NavigationContainer>
+              <Stack.Navigator>
+                <Stack.Screen
+                  name="Home"
+                  component={HomeScreen}
+                  options={{ title: 'Welcome' }}
+                />
+                <Stack.Screen name="Profile" component={Profile} />
+              </Stack.Navigator>
+            </NavigationContainer>
+            
           );
     }
 };
